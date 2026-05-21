@@ -1,9 +1,13 @@
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiLeetcode } from "react-icons/si";
-import profile from "../imagepacks/mainpic.jpeg";
+import profile from "../imagepacks/pic.jpeg";
+import { useState } from "react";
+import ResumeModal from "./ResumeModal";
+import {  AnimatePresence } from "framer-motion";
 
 export default function Hero() {
+  const [resumeOpen, setResumeOpen] = useState(false);
   return (
     <section
       id="home"
@@ -13,7 +17,6 @@ export default function Hero() {
       "
     >
       {/* Background Grid */}
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
       <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center w-full max-w-7xl">
 
@@ -60,13 +63,16 @@ export default function Hero() {
               Explore My Work →
             </a>
 
-            <a
-              href="/res.pdf"
-              download
-              className="px-6 sm:px-8 py-3 rounded-full border border-blue-400 text-blue-400 text-sm sm:text-base hover:bg-blue-400 hover:text-black transition"
-            >
-              Resume ↓
-            </a>
+            <motion.button
+  layoutId="resumeButton"
+  onClick={() => setResumeOpen(true)}
+  className="px-6 sm:px-8 py-3 rounded-full border border-blue-400
+  text-blue-400 text-sm sm:text-base
+  hover:bg-blue-400 hover:text-black
+  transition cursor-pointer"
+>
+  Resume ↓
+</motion.button>
           </div>
         </div>
 
@@ -126,7 +132,14 @@ rounded-xl border border-white/10 shadow-xl">
           
 
         </div>
-      
+        <AnimatePresence>
+  {resumeOpen && (
+    <ResumeModal
+      open={resumeOpen}
+      setOpen={setResumeOpen}
+    />
+  )}
+</AnimatePresence>
     </section>
   );
 }

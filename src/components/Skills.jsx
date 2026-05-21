@@ -10,6 +10,14 @@ import {
   BiLogoPython,
   BiLogoCPlusPlus,
   BiLogoGithub,
+  BiLogoAdobe,
+  BiLogoBlender,
+  BiLogoVisualStudio,
+  BiLogoSteam,
+  BiLogoSass,
+  BiLogoBootstrap,
+  BiLogoDiscord,
+  BiLogoGit,
 } from "react-icons/bi";
 
 const skills = [
@@ -22,7 +30,17 @@ const skills = [
   { icon: <BiLogoMongodb />, name: "MongoDB", color: "text-emerald-400" },
   { icon: <BiLogoPython />, name: "Python", color: "text-blue-400" },
   { icon: <BiLogoCPlusPlus />, name: "C++", color: "text-indigo-400" },
-  { icon: <BiLogoGithub />, name: "GitHub", color: "text-gray-300" },
+  
+  { icon: <BiLogoAdobe />, name: "Adobe", color: "text-red-800" },
+  { icon: <BiLogoBlender />, name: "Blender", color: "text-orange-500" },
+  { icon: <BiLogoVisualStudio />, name: "VS Code", color: "text-blue-700" },
+  { icon: <BiLogoSteam/>, name: "Steam", color: "text-gray-300" },
+  { icon: <BiLogoSass />, name: "Sass", color: "text-pink-300" },
+  { icon: <BiLogoBootstrap />, name: "Bootstrap ", color: "text-purple-500" },
+  { icon: <BiLogoDiscord />, name: "Discord", color: "text-blue-500" },
+  { icon: <BiLogoGit />, name: "Git", color: "text-orange-300" },
+  
+  
 ];
 
 export default function Skills() {

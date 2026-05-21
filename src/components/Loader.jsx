@@ -1,51 +1,95 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+
+function Counter() {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    const start = Date.now();
+    const dur = 2000;
+    const tick = () => {
+      const t = Math.min((Date.now() - start) / dur, 1);
+      const eased = t < 0.6 ? 0.7*(t/0.6) : t < 0.85 ? 0.7+0.18*((t-0.6)/0.25) : 0.88+0.12*((t-0.85)/0.15);
+      setVal(Math.round(eased * 100));
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    const id = setTimeout(() => requestAnimationFrame(tick), 1100);
+    return () => clearTimeout(id);
+  }, []);
+  return <>{val}%</>;
+}
 
 export default function Loader() {
   return (
     <motion.div
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.9 }}
-      className="fixed inset-0 z-[999] flex flex-col items-center justify-center bg-[#06060b] overflow-hidden"
+      transition={{ duration: 0.5 }}
+      className="fixed inset-0 z-[999] flex flex-col items-center justify-center gap-5"
+      style={{
+        background: `
+          radial-gradient(ellipse 60% 50% at 30% 20%, rgba(14,165,233,0.07) 0%, transparent 70%),
+          radial-gradient(ellipse 50% 60% at 75% 80%, rgba(139,92,246,0.06) 0%, transparent 70%),
+          #07070e
+        `
+      }}
     >
-      {/* Glow Background */}
+      {/* RAAGHAV — outline ghost + solid wipe */}
       <motion.div
-        animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.5, 0.2] }}
-        transition={{ repeat: Infinity, duration: 3 }}
-        className="absolute w-72 h-72 bg-cyan-400 blur-[120px] opacity-20 rounded-full"
-      />
-
-      {/* RB Logo */}
-      <motion.h1
-        initial={{ opacity: 0, y: 40, letterSpacing: "0.2em" }}
-        animate={{ opacity: 1, y: 0, letterSpacing: "0.05em" }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        className="text-7xl md:text-9xl font-bold tracking-widest
-        bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500
-        bg-clip-text text-transparent"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="relative leading-none"
       >
-        RB
-      </motion.h1>
+        <span
+          className="text-[92px] font-black tracking-[0.1em] text-transparent select-none"
+          style={{ WebkitTextStroke: "1.5px rgba(255,255,255,0.12)" }}
+        >
+          RAAGHAV
+        </span>
+        <motion.span
+          className="absolute inset-0 text-[92px] font-black tracking-[0.1em] text-white overflow-hidden"
+          initial={{ clipPath: "inset(100% 0 0 0)" }}
+          animate={{ clipPath: "inset(0% 0 0 0)" }}
+          transition={{ duration: 1, ease: [0.77, 0, 0.18, 1], delay: 0.3 }}
+        >
+          RAAGHAV
+        </motion.span>
+      </motion.div>
 
-      {/* Subtitle */}
+      {/* Loading bar row */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+        className="flex items-center gap-2.5"
+      >
+        <span className="text-[10px] tracking-[0.25em] text-white/20 uppercase font-mono">
+          Loading
+        </span>
+
+        <div className="w-20 h-[2px] bg-white/[0.06] rounded-full overflow-hidden">
+          <motion.div
+            className="h-full bg-gradient-to-r from-sky-400 to-cyan-400 rounded-full"
+            initial={{ width: "0%" }}
+            animate={{ width: "100%" }}
+            transition={{ duration: 2, ease: [0.4, 0, 0.2, 1], delay: 1.1 }}
+          />
+        </div>
+
+        <span className="text-[10px] text-cyan-400/35 font-mono min-w-[28px]">
+          <Counter />
+        </span>
+      </motion.div>
+
+      {/* Portfolio label */}
       <motion.p
         initial={{ opacity: 0 }}
-        animate={{ opacity: [0, 1, 0.6] }}
-        transition={{ delay: 0.6, duration: 1 }}
-        className="mt-6 text-gray-400 font-mono text-sm tracking-wider"
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.1 }}
+        className="text-[10px] tracking-[0.3em] text-white/[0.18] uppercase font-mono"
       >
-        Initializing Portfolio...
+        Portfolio
       </motion.p>
-
-      {/* Progress Bar */}
-      <motion.div className="mt-8 w-48 h-[2px] bg-white/10 rounded-full overflow-hidden">
-        <motion.div
-          initial={{ x: "-100%" }}
-          animate={{ x: "100%" }}
-          transition={{ duration: 1.6, ease: "easeInOut" }}
-          className="h-full bg-gradient-to-r from-blue-400 to-cyan-400"
-        />
-      </motion.div>
     </motion.div>
   );
 }

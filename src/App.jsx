@@ -20,6 +20,7 @@ import Achievements from "./components/Achievements";
 import Contact from "./components/Contact";
 import CodeStrip from "./components/CodeStrip";
 import DevQuote from "./components/DevQuote";
+import AnimatedBackground from "./components/AnimatedBackground";
 
 export default function App() {
   const [loading, setLoading] = useState(
@@ -40,6 +41,7 @@ export default function App() {
 
   return (
     <>
+    <AnimatedBackground/>
       {/* ===== Loader ===== */}
       <AnimatePresence>
         {loading && <Loader />}
@@ -48,11 +50,12 @@ export default function App() {
       {/* ===== Main Website ===== */}
       {!loading && (
         <motion.div
-        initial={{ opacity: 0, scale: 0.98 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative bg-black text-white scroll-smooth overflow-x-hidden"
-      >
+  initial={{ opacity: 0, scale: 0.98 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+  className="relative bg-transparent text-white scroll-smooth overflow-x-hidden"
+>
+        
         {/* Global Responsive Container */}
         <div className="w-full max-w-[1400px] mx-auto ">
       
