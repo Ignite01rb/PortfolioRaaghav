@@ -7,7 +7,7 @@ import p4 from "../imagepacks/p4.png";
 import p5 from "../imagepacks/p5main.png";
 import p6 from "../imagepacks/p6.png";
 import p7 from "../imagepacks/p7.png";
-import P8 from "../imagepacks/p8.png";
+import P8 from "../imagepacks/P8.png";
 import p9 from "../imagepacks/p9.png";
 import SectionReveal from "./SectionReveal";
 
