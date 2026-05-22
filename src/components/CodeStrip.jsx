@@ -5,7 +5,7 @@ export default function CodeStrip() {
     "const build = () => learn();   <Code />   deploy();   debug();   optimize();   repeat();   ";
 
   return (
-    <div className="overflow-hidden border-y border-white/10 py-3">
+    <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen overflow-hidden border-y border-white/10 py-3">
       <motion.div
         className="flex whitespace-nowrap font-mono text-sm text-gray-500"
         animate={{ x: ["0%", "-50%"] }}

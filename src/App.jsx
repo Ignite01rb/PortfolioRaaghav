@@ -76,6 +76,7 @@ export default function App() {
           <CodeStrip />
           <Skills />
           <Projects />
+          
           <VideoProjects />
           <DevQuote />
           <Achievements />
