@@ -1,14 +1,14 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import p1 from "../imagepacks/p1.png";
-import p2 from "../imagepacks/p2.png";
-import p3 from "../imagepacks/p3.png";
+// import p2 from "../imagepacks/p2.png";
+// import p3 from "../imagepacks/p3.png";
 import p4 from "../imagepacks/p4.png";
 import p5 from "../imagepacks/p5main.png";
 import p6 from "../imagepacks/p6.png";
 import p7 from "../imagepacks/p7.png";
-import P8 from "../imagepacks/P8.png";
-import p9 from "../imagepacks/P9.png";
+import P8 from "../imagepacks/p8.png";
+import p9 from "../imagepacks/p9.png";
 import SectionReveal from "./SectionReveal";
 
 const projects = [
