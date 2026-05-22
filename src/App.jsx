@@ -70,9 +70,9 @@ export default function App() {
       
           {/* Sections */}
           <Hero />
-          <DevTerminal />
+          {/* <DevTerminal /> */}
           <About />
-          <PersonalityCard />
+          {/* <PersonalityCard /> */}
           <CodeStrip />
           <Skills />
           <Projects />

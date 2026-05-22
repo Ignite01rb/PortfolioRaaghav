@@ -19,6 +19,7 @@ import {
   BiLogoDiscord,
   BiLogoGit,
 } from "react-icons/bi";
+import { DiFirebase, DiGithub, DiMysql } from "react-icons/di";
 
 const skills = [
   { icon: <BiLogoReact />, name: "React", color: "text-cyan-400" },
@@ -34,11 +35,14 @@ const skills = [
   { icon: <BiLogoAdobe />, name: "Adobe", color: "text-red-800" },
   { icon: <BiLogoBlender />, name: "Blender", color: "text-orange-500" },
   { icon: <BiLogoVisualStudio />, name: "VS Code", color: "text-blue-700" },
-  { icon: <BiLogoSteam/>, name: "Steam", color: "text-gray-300" },
+  { icon: <BiLogoSteam/>, name: "Steam", color: "text-blue-200" },
   { icon: <BiLogoSass />, name: "Sass", color: "text-pink-300" },
   { icon: <BiLogoBootstrap />, name: "Bootstrap ", color: "text-purple-500" },
   { icon: <BiLogoDiscord />, name: "Discord", color: "text-blue-500" },
-  { icon: <BiLogoGit />, name: "Git", color: "text-orange-300" },
+  { icon: <DiGithub />, name: "Github", color: "text-white-300" },
+  { icon: <DiMysql />, name: "MySql", color: "text-blue-600" },
+  
+
   
   
 ];

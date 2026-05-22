@@ -12,11 +12,12 @@ const tags = [
   { label: "Full Stack", color: "blue" },
   { label: "DSA", color: "purple" },
   { label: "AI / ML", color: "green" },
-  { label: "UI Design", color: "pink" },
-  { label: "React.js", color: "blue" },
-  { label: "Node.js", color: "purple" },
+  { label: "UI UX Design", color: "pink" },
+  // { label: "React.js", color: "blue" },
+  // { label: "Node.js", color: "purple" },
   { label: "Python", color: "green" },
   { label: "MongoDB", color: "pink" },
+  { label: "MySQL", color: "pink" },
 ];
 
 const tagColors = {
@@ -29,14 +30,14 @@ const tagColors = {
 const skills = [
   { label: "Problem Solving", pct: 90, gradient: "linear-gradient(90deg,#38bdf8,#818cf8)" },
   { label: "Full Stack Dev",  pct: 80, gradient: "linear-gradient(90deg,#a78bfa,#38bdf8)" },
-  { label: "AI / ML",         pct: 70, gradient: "linear-gradient(90deg,#34d399,#38bdf8)" },
-  { label: "UI / UX",         pct: 75, gradient: "linear-gradient(90deg,#f472b6,#a78bfa)" },
+  { label: "AI / ML",         pct: 65, gradient: "linear-gradient(90deg,#34d399,#38bdf8)" },
+  { label: "UI / UX",         pct: 90, gradient: "linear-gradient(90deg,#f472b6,#a78bfa)" },
 ];
 
 const timeline = [
   { date: "Sept 2023", color: "#38bdf8", title: "Joined BVCOE",          sub: "B.Tech ECE begins"       },
   { date: "Nov 2023",  color: "#a78bfa", title: "Joined Societies",          sub: "EduMinerva & IOSC"       },
-  // { date: "2024",      color: "#34d399", title: "First Projects",         sub: "MediBook & CareConnect"  },
+  { date: "2024",      color: "#34d399", title: "Projects",           },
   { date: "2025",      color: "#fb923c", title: "Training ",              sub: "AI/ML training" },
   { date: "2026 →",    color: "#f472b6", title: "Now",                   sub: "Seeking opportunities"   },
 ];
@@ -63,7 +64,7 @@ function CardTag({ color, label }) {
 
 export default function About() {
   return (
-    <section id="about" className="relative min-h-screen flex flex-col items-center justify-center px-5 sm:px-6 md:px-20 py-24">
+    <section id="about" className="relative min-h-screen flex flex-col items-center justify-center px-5 sm:px-6 md:px-20 py-24 mt-7">
 
       {/* Header */}
       <motion.div {...fadeUp(0)} className="text-center mb-14">
@@ -90,7 +91,7 @@ export default function About() {
               {[
                 ["role",    '"Software Developer"',   "text-green-400"],
                 ["college", '"BVCOE, GGSIPU"',        "text-green-400"],
-                ["year",    "2nd",                    "text-orange-400"],
+                ["year",    "3rd",                    "text-orange-400"],
                 ["cgpa",    "8.3",                    "text-orange-400"],
                 ["openTo",  '"Internships"',           "text-green-400"],
                 ["learning",'"Always"',               "text-green-400"],
@@ -122,7 +123,7 @@ export default function About() {
         <motion.div {...fadeUp(0.15)}>
           <Card>
             <CardTag color="#a78bfa" label="interests.map()" />
-            <h3 className="text-sm font-semibold text-white mb-3">What I Love Building</h3>
+            {/* <h3 className="text-sm font-semibold text-white mb-3">What I Love Building</h3> */}
             <div className="flex flex-wrap gap-2">
               {tags.map(({ label, color }) => (
                 <span

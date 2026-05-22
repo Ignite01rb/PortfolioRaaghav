@@ -6,56 +6,37 @@ import p3 from "../imagepacks/p3.png";
 import p4 from "../imagepacks/p4.png";
 import p5 from "../imagepacks/p5main.png";
 import p6 from "../imagepacks/p6.png";
+import p7 from "../imagepacks/p7.png";
+import P8 from "../imagepacks/P8.png";
+import p9 from "../imagepacks/P9.png";
 import SectionReveal from "./SectionReveal";
 
 const projects = [
   {
     image: p1,
-    title: "Doctor Appointment Manager",
+    title: "MediBook",
     description:
       "Full-stack healthcare platform enabling appointment scheduling, doctor availability management, ML-based enhancements and secure backend integration.",
     tech: ["React", "Node.js", "MongoDB", "Express", "Python"],
     link: "https://doctorsite-qjri.vercel.app/",
-    accent: "from-cyan-400 to-blue-500",
+    github: "https://github.com/Ignite01rb/MediBook-",
+    accent: "from-cyan-400 to-orange-800",
     accentColor: "#22d3ee",
     tag: "Full Stack",
     num: "01",
   },
   {
-    image: p2,
-    title: "Finance Manager",
+    image: p9,
+    title: "Referrr",
     description:
-      "Personal finance tracker with expense monitoring, budgeting system, and interactive data visualization.",
-    tech: ["HTML", "CSS", "JavaScript"],
-    link: "https://667272d3edf85bc2caad5b89--silly-paprenjak-cd0be7.netlify.app/",
-    accent: "from-emerald-400 to-cyan-500",
-    accentColor: "#34d399",
-    tag: "Frontend",
+      "Referrrr is an AI-powered job outreach platform that generates personalized referral, cold email, LinkedIn, and HR messages using your resume and skills.",
+    tech: ["React.js", " Tailwind CSS","Framer Motion","Lucide React","Fetch API" ,"Node.js","Express.js","CORS","Groq API"],
+    link: "https://referrrr.vercel.app/",
+    github: "https://github.com/Ignite01rb/referrrr",
+    accent: "from-green-200 to-blue-800",
+    accentColor: "#66ffc2",
+    tag: "Full Stack",
     num: "02",
-  },
-  {
-    image: p3,
-    title: "Gym Website",
-    description:
-      "Modern responsive gym website showcasing memberships, trainers, schedules and user engagement features.",
-    tech: ["HTML", "CSS", "JavaScript"],
-    link: "https://66730b25dd68c85f09fd44ac--unique-kelpie-8c5474.netlify.app/",
-    accent: "from-purple-400 to-indigo-500",
-    accentColor: "#a855f7",
-    tag: "Frontend",
-    num: "03",
-  },
-  {
-    image: p4,
-    title: "React TODO Application",
-    description:
-      "Task management app with local storage persistence, editing features and completed task segregation.",
-    tech: ["React", "CSS"],
-    link: "https://669dfd7759d015c16460b482--ephemeral-medovik-909ca2.netlify.app/",
-    accent: "from-yellow-400 to-orange-500",
-    accentColor: "#facc15",
-    tag: "React",
-    num: "04",
   },
   {
     image: p5,
@@ -64,22 +45,79 @@ const projects = [
       "Scalable hospital workflow management platform with department filtering, patient modules and responsive UI.",
     tech: ["React", "TailwindCSS"],
     link: "https://careconnect-1v6s.vercel.app/",
-    accent: "from-pink-400 to-red-500",
-    accentColor: "#f472b6",
+    github: "https://github.com/Ignite01rb/Care-Connect",
+    accent: "from-red-800 to-pink-500",
+    accentColor: "#ffcc99",
     tag: "Full Stack",
-    num: "05",
+    num: "03",
   },
   {
     image: p6,
     title: "Sentiment Analysis",
     description:
       "Machine learning model to classify tweets as positive or negative using NLP pipelines.",
-    tech: ["Python", "NLTK", "Scikit-learn", "Pandas", "NumPy", "Matplotlib", "Seaborn"],
+    tech: [
+      "Python",
+      "NLTK",
+      "Scikit-learn",
+      "Pandas",
+      "NumPy",
+      "Matplotlib",
+      "Seaborn",
+    ],
     link: "https://sentimentanalysis6.streamlit.app/",
-    accent: "from-pink-400 to-rose-500",
-    accentColor: "#fb7185",
+    github: "https://github.com/Ignite01rb/sentiment",
+    accent: "from-blue-400 to-purple-500",
+    accentColor: "#d24dff",
     tag: "ML / AI",
+    num: "04",
+  },
+  {
+    image: p7,
+    title: "AuraPlay",
+    description:
+      "AuraPlay is a premium movie discovery platform that helps users explore films, manage watchlists, read community reviews, and find where to stream their favorite content.",
+    tech: [
+      "ReactJS",
+      
+    ],
+    link: "https://aura-play-three.vercel.app/",
+    github: "https://github.com/Ignite01rb/AuraPlay",
+    accent: "from-yellow-400 to-red-500",
+    accentColor: "#facc15",
+    tag: "Frontend",
+    num: "05",
+  },
+  {
+    image: p4,
+    title: "React TODO Application",
+    description:
+      "Task management app with local storage persistence, editing features and completed task segregation.",
+    tech: ["React", "CSS"],
+    link: "https://669dfd7759d015c16460b482--ephemeral-medovik-909ca2.netlify.app/",
+    github: "https://github.com/Ignite01rb/Todos",
+    accent: "from-red-600 to-brown-700",
+    accentColor: "#a3c2c2",
+    tag: "React",
     num: "06",
+  },
+  {
+    image: P8,
+    title: "TowerDefence",
+    description:
+      "A 2D Tower Defense game built in C++ with OpenGL and GLUT, featuring real-time enemy spawning, interactive combat, and strategic power-up mechanics.",
+    tech: [
+      "C++",
+      "OpenGL",
+      "GLUT",
+      "G++ Compiler",
+    ],
+    // link: "https://sentimentanalysis6.streamlit.app/",
+    github: "https://github.com/Ignite01rb/towerdefence",
+    accent: "from-green-400 to-red-500",
+    accentColor: "#70db70",
+    tag: "C++",
+    num: "07",
   },
 ];
 
@@ -181,7 +219,10 @@ function ProjectCard({ project, index }) {
           {project.title}
         </motion.h3>
 
-        <p className="text-sm sm:text-base leading-relaxed mb-6" style={{ color: "rgba(255,255,255,0.5)" }}>
+        <p
+          className="text-sm sm:text-base leading-relaxed mb-6"
+          style={{ color: "rgba(255,255,255,0.5)" }}
+        >
           {project.description}
         </p>
 
@@ -234,6 +275,42 @@ function ProjectCard({ project, index }) {
             →
           </motion.span>
         </a>
+        {/* <span style={{ color: "rgba(255,255,255,0.1)" }}>|</span> */}
+        {/* GitHub link */}
+        <a
+          href={project.github}
+          target="_blank"
+          rel="noreferrer"
+          className="group inline-flex items-center gap-2"
+        >
+          <motion.span
+            className="text-sm font-semibold tracking-wide"
+            style={{ color: "rgba(255,255,255,0.4)" }}
+            whileHover={{ color: "#fff", x: 4 }}
+            transition={{ duration: 0.2 }}
+          >
+            GitHub
+          </motion.span>
+          <motion.span
+            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-sm"
+            style={{
+              border: "1px solid rgba(255,255,255,0.12)",
+              color: "rgba(255,255,255,0.4)",
+              background: "rgba(255,255,255,0.04)",
+            }}
+            whileHover={{
+              scale: 1.15,
+              x: 3,
+              borderColor: "rgba(255,255,255,0.3)",
+              color: "#fff",
+            }}
+            transition={{ duration: 0.2 }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+            </svg>
+          </motion.span>
+        </a>
       </div>
     </motion.div>
   );
@@ -283,11 +360,20 @@ export default function Projects() {
           className="flex items-center gap-4 mb-12 md:mb-16 max-w-7xl mx-auto"
           style={{ transformOrigin: "left" }}
         >
-          <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.08)" }} />
-          <span className="font-mono text-xs tracking-[0.2em] uppercase" style={{ color: "rgba(255,255,255,0.3)" }}>
-             projects
+          <div
+            className="h-px flex-1"
+            style={{ background: "rgba(255,255,255,0.08)" }}
+          />
+          <span
+            className="font-mono text-xs tracking-[0.2em] uppercase"
+            style={{ color: "rgba(255,255,255,0.3)" }}
+          >
+            projects
           </span>
-          <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.08)" }} />
+          <div
+            className="h-px flex-1"
+            style={{ background: "rgba(255,255,255,0.08)" }}
+          />
         </motion.div>
       </SectionReveal>
 
@@ -306,7 +392,8 @@ export default function Projects() {
         transition={{ duration: 0.8 }}
         className="max-w-7xl mx-auto mt-16 h-px"
         style={{
-          background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)",
+          background:
+            "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)",
           transformOrigin: "center",
         }}
       />

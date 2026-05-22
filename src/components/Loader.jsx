@@ -24,7 +24,7 @@ export default function Loader() {
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed inset-0 z-[999] flex flex-col items-center justify-center gap-5"
+      className="fixed inset-0 z-[999] flex flex-col items-center justify-center gap-5 px-4"
       style={{
         background: `
           radial-gradient(ellipse 60% 50% at 30% 20%, rgba(14,165,233,0.07) 0%, transparent 70%),
@@ -33,21 +33,29 @@ export default function Loader() {
         `
       }}
     >
-      {/* RAAGHAV — outline ghost + solid wipe */}
+      {/* RAAGHAV */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="relative leading-none"
       >
+        {/* Ghost outline */}
         <span
-          className="text-[92px] font-black tracking-[0.1em] text-transparent select-none"
-          style={{ WebkitTextStroke: "1.5px rgba(255,255,255,0.12)" }}
+          className="select-none text-transparent font-black tracking-[0.08em] sm:tracking-[0.1em]"
+          style={{
+            fontSize: "clamp(42px, 16vw, 92px)",
+            WebkitTextStroke: "1.5px rgba(255,255,255,0.12)",
+            display: "block",
+          }}
         >
           RAAGHAV
         </span>
+
+        {/* Wipe-in solid */}
         <motion.span
-          className="absolute inset-0 text-[92px] font-black tracking-[0.1em] text-white overflow-hidden"
+          className="absolute inset-0 text-white font-black tracking-[0.08em] sm:tracking-[0.1em] overflow-hidden"
+          style={{ fontSize: "clamp(42px, 16vw, 92px)" }}
           initial={{ clipPath: "inset(100% 0 0 0)" }}
           animate={{ clipPath: "inset(0% 0 0 0)" }}
           transition={{ duration: 1, ease: [0.77, 0, 0.18, 1], delay: 0.3 }}

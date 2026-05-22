@@ -1,13 +1,52 @@
 import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaEnvelope, FaPhone } from "react-icons/fa";
 import SectionReveal from "./SectionReveal";
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 30 },
+  whileInView: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, delay },
+  viewport: { once: true },
+});
+
+const socials = [
+  {
+    icon: <FaEnvelope size={14} />,
+    label: "Email",
+    value: "raaghavbisht@gmail.com",
+    href: "mailto:raaghavbisht@gmail.com",
+    color: "#38bdf8",
+  },
+  {
+    icon: <FaLinkedin size={14} />,
+    label: "LinkedIn",
+    value: "linkedin.com/in/raaghav-bisht",
+    href: "https://www.linkedin.com/in/raaghav-bisht-b03a60291/",
+    color: "#818cf8",
+  },
+  {
+    icon: <FaGithub size={14} />,
+    label: "GitHub",
+    value: "github.com/Ignite01rb",
+    href: "https://github.com/Ignite01rb",
+    color: "#a78bfa",
+  },
+  {
+    icon: <FaPhone size={14} />,
+    label: "Phone",
+    value: "+91 9354458389",
+    href: "tel:+919354458389",
+    color: "#34d399",
+  },
+];
 
 export default function Contact() {
   const form = useRef();
   const [sending, setSending] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [focused, setFocused] = useState(null);
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -15,17 +54,17 @@ export default function Contact() {
 
     emailjs
       .sendForm(
-        "service_puelj4i",   // <-- replace
-        "template_1e55oga",  // <-- replace
+        "service_puelj4i",
+        "template_1e55oga",
         form.current,
-        "3fMSSnbjYglvFRtjD"    // <-- replace
+        "3fMSSnbjYglvFRtjD"
       )
       .then(
         () => {
           setSending(false);
           setSuccess(true);
           form.current.reset();
-          setTimeout(() => setSuccess(false), 3000);
+          setTimeout(() => setSuccess(false), 4000);
         },
         () => {
           setSending(false);
@@ -34,122 +73,236 @@ export default function Contact() {
       );
   };
 
+  const inputClass = () =>
+    "w-full bg-transparent px-4 py-3.5 text-sm text-white rounded-xl outline-none transition-all duration-200 font-mono";
+
+  const inputWrap = (name) => ({
+    background: "rgba(255,255,255,0.03)",
+    border: `0.5px solid ${
+      focused === name
+        ? "rgba(56,189,248,0.5)"
+        : "rgba(255,255,255,0.08)"
+    }`,
+    borderRadius: "12px",
+    transition: "border-color 0.2s",
+  });
+
   return (
     <section
       id="contact"
-      className="relative pt-24 pb-28 md:pt-32 md:pb-36
-px-5 sm:px-6 md:px-20
-flex flex-col items-center"
+      className="relative pt-24 pb-28 md:pt-32 md:pb-36 px-5 sm:px-6 md:px-20 flex flex-col items-center"
     >
       <SectionReveal>
+        {/* Header */}
+        <motion.div {...fadeUp(0)} className="text-center mb-16">
+          <p
+            className="font-mono text-[10px] tracking-[0.22em] uppercase mb-3"
+            style={{ color: "rgba(56,189,248,0.5)" }}
+          >
+            // get in touch
+          </p>
 
-        {/* Background Grid */}
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4">
+            Let's Build Something{" "}
+            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+              Great
+            </span>
+          </h2>
 
-        {/* Title */}
-        <motion.h2
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-4xl md:text-6xl font-semibold tracking-tight mb-10 text-center"
-        >
-          Let’s Build Something Great
-        </motion.h2>
-
-        <p className="text-gray-400 text-lg text-center max-w-2xl mb-16">
-          I'm always open to discussing opportunities, collaborations,
-          or impactful projects. Feel free to reach out.
-        </p>
-
-        {/* Contact Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-          className="w-full max-w-4xl
-bg-white/5 backdrop-blur-xl border border-white/10
-rounded-2xl
-p-6 sm:p-8 md:p-12
-shadow-xl"
-        >
-          <div className="grid md:grid-cols-2 gap-12">
-
-            {/* LEFT INFO */}
-            <div className="space-y-6">
-              <h3 className="text-2xl font-semibold text-blue-400">
-                Contact Information
-              </h3>
-
-              <div className="flex items-center gap-4 text-gray-300">
-                <FaEnvelope className="text-blue-400" />
-                <span>raagee2005@gmail.com</span>
-              </div>
-
-              <div className="flex items-center gap-4 text-gray-300">
-                <FaLinkedin className="text-blue-400" />
-                <span>linkedin.com/in/raaghav-bisht</span>
-              </div>
-
-              <div className="flex items-center gap-4 text-gray-300">
-                <FaGithub className="text-blue-400" />
-                <span>github.com/Ignite01rb</span>
-              </div>
-            </div>
-
-            {/* RIGHT FORM */}
-            <form
-              ref={form}
-              onSubmit={sendEmail}
-              className="flex flex-col gap-6"
-            >
-              <input
-                type="text"
-                name="user_name"
-                placeholder="Your Name"
-                required
-                className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-400 transition"
-              />
-
-              <input
-                type="email"
-                name="user_email"
-                placeholder="Your Email"
-                required
-                className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-400 transition"
-              />
-
-              <textarea
-                rows="4"
-                name="message"
-                placeholder="Your Message"
-                required
-                className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-400 transition resize-none"
-              />
-
-              <button
-                type="submit"
-                disabled={sending}
-                className="mt-2 px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-medium hover:scale-105 transition"
-              >
-                {sending ? "Sending..." : "Send Message →"}
-              </button>
-
-              {success && (
-                <p className="text-green-400 text-sm">
-                  Message sent successfully ✅
-                </p>
-              )}
-            </form>
-          </div>
+          <p className="text-gray-500 text-base max-w-xl mx-auto leading-relaxed">
+            Open to opportunities, collaborations, and impactful projects.
+            Drop a message and I'll get back to you.
+          </p>
         </motion.div>
 
-        {/* Footer */}
-        <p className="mt-16 text-gray-600 text-sm">
-          © {new Date().getFullYear()} Raaghav Bisht. All rights reserved.
-        </p>
+        {/* Main Card */}
+        <div className="w-full max-w-4xl">
+          <div className="grid md:grid-cols-5 gap-4">
+            {/* Left Panel */}
+            <motion.div
+              {...fadeUp(0.1)}
+              className="md:col-span-2 rounded-2xl p-6 flex flex-col justify-between gap-8"
+              style={{
+                background: "rgba(255,255,255,0.03)",
+                border: "0.5px solid rgba(255,255,255,0.08)",
+              }}
+            >
+              <div>
+                <div className="flex items-center gap-2 mb-6">
+                  <span
+                    className="w-1.5 h-1.5 rounded-full"
+                    style={{ background: "#38bdf8" }}
+                  />
+                  <span
+                    className="font-mono text-[10px] tracking-[0.18em] uppercase"
+                    style={{ color: "rgba(56,189,248,0.5)" }}
+                  >
+                    contact.info
+                  </span>
+                </div>
 
+                <h3 className="text-xl font-bold text-white mb-2 tracking-tight">
+                  Raaghav Bisht
+                </h3>
+
+                <p
+                  className="text-xs font-mono mb-6"
+                  style={{ color: "rgba(255,255,255,0.3)" }}
+                >
+                  B.Tech ECE · BVCOE · GGSIPU
+                </p>
+
+                {/* Social Links */}
+                <div className="flex flex-col gap-3">
+                  {socials.map((s) => (
+                    <a
+                      key={s.label}
+                      href={s.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group flex items-center gap-3 p-3 rounded-xl transition-all duration-200"
+                      style={{ border: "0.5px solid transparent" }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = `${s.color}0d`;
+                        e.currentTarget.style.borderColor = `${s.color}30`;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "transparent";
+                        e.currentTarget.style.borderColor = "transparent";
+                      }}
+                    >
+                      <span
+                        className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
+                        style={{
+                          background: `${s.color}15`,
+                          color: s.color,
+                        }}
+                      >
+                        {s.icon}
+                      </span>
+
+                      <div className="min-w-0">
+                        <p
+                          className="font-mono text-[9px] tracking-widest uppercase mb-0.5"
+                          style={{ color: "rgba(255,255,255,0.25)" }}
+                        >
+                          {s.label}
+                        </p>
+
+                        <p
+                          className="text-xs truncate transition-colors duration-200"
+                          style={{ color: "rgba(255,255,255,0.55)" }}
+                        >
+                          {s.value}
+                        </p>
+                      </div>
+
+                      <span
+                        className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-xs"
+                        style={{ color: s.color }}
+                      >
+                        ↗
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Status */}
+              <div
+                className="flex items-center gap-2 px-3 py-2 rounded-xl"
+                style={{
+                  background: "rgba(52,211,153,0.07)",
+                  border: "0.5px solid rgba(52,211,153,0.2)",
+                }}
+              >
+                <motion.span
+                  animate={{ opacity: [1, 0.3, 1] }}
+                  transition={{ repeat: Infinity, duration: 1.8 }}
+                  className="w-1.5 h-1.5 rounded-full shrink-0"
+                  style={{ background: "#34d399" }}
+                />
+
+                <span
+                  className="font-mono text-[10px] tracking-wider"
+                  style={{ color: "rgba(52,211,153,0.7)" }}
+                >
+                  Available for opportunities
+                </span>
+              </div>
+            </motion.div>
+
+            {/* Right Panel */}
+            <motion.div
+              {...fadeUp(0.15)}
+              className="md:col-span-3 rounded-2xl p-6 sm:p-8"
+              style={{
+                background: "rgba(255,255,255,0.03)",
+                border: "0.5px solid rgba(255,255,255,0.08)",
+              }}
+            >
+              <form ref={form} onSubmit={sendEmail} className="flex flex-col gap-4">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div style={inputWrap("name")}>
+                    <input
+                      type="text"
+                      name="user_name"
+                      placeholder="Your Name"
+                      required
+                      className={inputClass()}
+                      onFocus={() => setFocused("name")}
+                      onBlur={() => setFocused(null)}
+                    />
+                  </div>
+
+                  <div style={inputWrap("email")}>
+                    <input
+                      type="email"
+                      name="user_email"
+                      placeholder="Your Email"
+                      required
+                      className={inputClass()}
+                      onFocus={() => setFocused("email")}
+                      onBlur={() => setFocused(null)}
+                    />
+                  </div>
+                </div>
+
+                <div style={inputWrap("subject")}>
+                  <input
+                    type="text"
+                    name="subject"
+                    placeholder="Subject"
+                    className={inputClass()}
+                  />
+                </div>
+
+                <div style={inputWrap("message")}>
+                  <textarea
+                    rows="5"
+                    name="message"
+                    placeholder="Your Message"
+                    required
+                    className={`${inputClass()} resize-none`}
+                  />
+                </div>
+
+                <motion.button
+                  type="submit"
+                  disabled={sending || success}
+                  whileTap={{ scale: 0.97 }}
+                  className="w-full py-3.5 rounded-xl text-sm font-semibold text-white"
+                >
+                  {success
+                    ? "✓ Message Sent Successfully"
+                    : sending
+                    ? "Sending..."
+                    : "Send Message →"}
+                </motion.button>
+              </form>
+            </motion.div>
+          </div>
+        </div>
       </SectionReveal>
     </section>
   );

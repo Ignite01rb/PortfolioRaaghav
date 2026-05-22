@@ -3,7 +3,7 @@ import SectionReveal from "./SectionReveal";
 
 const achievements = [
   {
-    title: "100+ Problems Solved",
+    title: "200+ Problems Solved",
     subtitle: "Practiced Data Structures and Algorithms by solving 100+ problems.",
     tag: "LeetCode",
     color: "text-yellow-400",

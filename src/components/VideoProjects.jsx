@@ -55,7 +55,12 @@ function PlayIcon() {
   );
 }
 
-function VideoCard({ video, className = "", onClick, aspectClass = "aspect-video" }) {
+function VideoCard({
+  video,
+  className = "",
+  onClick,
+  aspectClass = "aspect-video",
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -80,7 +85,10 @@ function VideoCard({ video, className = "", onClick, aspectClass = "aspect-video
       {/* overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 55%)" }}
+        style={{
+          background:
+            "linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 55%)",
+        }}
       />
 
       <PlayIcon />
@@ -107,11 +115,16 @@ function VideoCard({ video, className = "", onClick, aspectClass = "aspect-video
           >
             // {video.category}
           </div>
-          <div className="text-white font-semibold text-sm leading-tight">{video.title}</div>
+          <div className="text-white font-semibold text-sm leading-tight">
+            {video.title}
+          </div>
         </div>
         <div
           className="text-[11px] shrink-0 self-end mb-0.5"
-          style={{ fontFamily: "'Fira Code', monospace", color: "rgba(255,255,255,0.35)" }}
+          style={{
+            fontFamily: "'Fira Code', monospace",
+            color: "rgba(255,255,255,0.35)",
+          }}
         >
           {video.duration}
         </div>
@@ -152,7 +165,6 @@ export default function VideoProjects() {
 
         {/* Grid */}
         <div className="grid lg:grid-cols-3 gap-3 max-w-6xl mx-auto">
-
           {/* Featured — spans 2 cols */}
           <div className="lg:col-span-2">
             <VideoCard
@@ -192,15 +204,13 @@ export default function VideoProjects() {
                 background: "rgba(168,85,247,0.03)",
               }}
             >
-              
               <VideoCard
-    video={videos[3]}
-    onClick={setActiveVideo}
-    aspectClass="aspect-video"
-  />
+                video={videos[3]}
+                onClick={setActiveVideo}
+                aspectClass="aspect-video"
+              />
             </motion.div>
           </div>
-
         </div>
       </SectionReveal>
 
@@ -211,13 +221,13 @@ export default function VideoProjects() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 flex items-center justify-center z-50 p-6"
+            className="fixed inset-0 flex items-center justify-center z-[65] p-6"
             style={{ background: "rgba(0,0,0,0.92)" }}
             onClick={() => setActiveVideo(null)}
           >
             {/* Close button */}
             <button
-              className="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center transition-colors"
+              className="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center transition-colors z-[70]"
               style={{
                 border: "1px solid rgba(168,85,247,0.4)",
                 background: "rgba(168,85,247,0.1)",
