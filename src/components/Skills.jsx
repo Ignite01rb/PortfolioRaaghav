@@ -35,7 +35,7 @@ const skills = [
   { icon: <BiLogoAdobe />, name: "Adobe", color: "text-red-800" },
   { icon: <BiLogoBlender />, name: "Blender", color: "text-orange-500" },
   { icon: <BiLogoVisualStudio />, name: "VS Code", color: "text-blue-700" },
-  { icon: <BiLogoSteam/>, name: "Steam", color: "text-blue-200" },
+  // { icon: <BiLogoSteam/>, name: "Steam", color: "text-blue-200" },
   { icon: <BiLogoSass />, name: "Sass", color: "text-pink-300" },
   { icon: <BiLogoBootstrap />, name: "Bootstrap ", color: "text-purple-500" },
   { icon: <BiLogoDiscord />, name: "Discord", color: "text-blue-500" },

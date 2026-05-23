@@ -1,104 +1,94 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import p1 from "../imagepacks/p1.png";
-// import p2 from "../imagepacks/p2.png";
-// import p3 from "../imagepacks/p3.png";
+// import p1 from "../imagepacks/p1.png";
+import h1 from "../imagepacks/h1.png"
 import p4 from "../imagepacks/p4.png";
 import p5 from "../imagepacks/p5main.png";
 import p6 from "../imagepacks/p6.png";
 import p7 from "../imagepacks/p7.png";
 import P8 from "../imagepacks/P8.png";
 import p9 from "../imagepacks/p9.png";
+import p10 from "../imagepacks/p10.png";
+import p11 from "../imagepacks/p11.jpeg";
 import SectionReveal from "./SectionReveal";
 
 const projects = [
-  {
-    image: p1,
-    title: "MediBook",
-    description:
-      "Full-stack healthcare platform enabling appointment scheduling, doctor availability management, ML-based enhancements and secure backend integration.",
-    tech: ["React", "Node.js", "MongoDB", "Express", "Python"],
-    link: "https://doctorsite-qjri.vercel.app/",
-    github: "https://github.com/Ignite01rb/MediBook-",
-    accent: "from-cyan-400 to-orange-800",
-    accentColor: "#22d3ee",
-    tag: "Full Stack",
-    num: "01",
-  },
   {
     image: p9,
     title: "Referrr",
     description:
       "Referrrr is an AI-powered job outreach platform that generates personalized referral, cold email, LinkedIn, and HR messages using your resume and skills.",
-    tech: ["React.js", " Tailwind CSS","Framer Motion","Lucide React","Fetch API" ,"Node.js","Express.js","CORS","Groq API"],
+    tech: ["React.js", "Tailwind CSS", "Framer Motion", "Lucide React", "Fetch API", "Node.js", "Express.js", "CORS", "Groq API"],
     link: "https://referrrr.vercel.app/",
     github: "https://github.com/Ignite01rb/referrrr",
     accent: "from-green-200 to-blue-800",
     accentColor: "#66ffc2",
     tag: "Full Stack",
-    num: "02",
+    num: "01",
   },
   {
     image: p5,
     title: "Hospital Management System",
     description:
       "Scalable hospital workflow management platform with department filtering, patient modules and responsive UI.",
-    tech: ["React", "TailwindCSS"],
+    tech: ["React", "TailwindCSS", "Node.js", "MySQL"],
     link: "https://careconnect-1v6s.vercel.app/",
     github: "https://github.com/Ignite01rb/Care-Connect",
     accent: "from-red-800 to-pink-500",
     accentColor: "#ffcc99",
     tag: "Full Stack",
-    num: "03",
+    num: "02",
   },
   {
-    image: p6,
-    title: "Sentiment Analysis",
+    image: h1,
+    title: "MediBook",
     description:
-      "Machine learning model to classify tweets as positive or negative using NLP pipelines.",
-    tech: [
-      "Python",
-      "NLTK",
-      "Scikit-learn",
-      "Pandas",
-      "NumPy",
-      "Matplotlib",
-      "Seaborn",
-    ],
-    link: "https://sentimentanalysis6.streamlit.app/",
-    github: "https://github.com/Ignite01rb/sentiment",
-    accent: "from-blue-400 to-purple-500",
-    accentColor: "#d24dff",
-    tag: "ML / AI",
-    num: "04",
+      "Full-stack healthcare platform enabling appointment scheduling, doctor availability management, ML-based enhancements and secure backend integration.",
+    tech: ["React", "Node.js", "MongoDB", "Express", "Python"],
+    link: "https://medi-book-portal.vercel.app/",
+    github: "https://github.com/Ignite01rb/MediBook-",
+    accent: "from-cyan-400 to-orange-800",
+    accentColor: "#22d3ee",
+    tag: "Full Stack",
+    num: "03",
   },
   {
     image: p7,
     title: "AuraPlay",
     description:
       "AuraPlay is a premium movie discovery platform that helps users explore films, manage watchlists, read community reviews, and find where to stream their favorite content.",
-    tech: [
-      "ReactJS",
-      
-    ],
+    tech: ["ReactJS", "React-Bootstrap", "FontAwesome", "Axios", "Vanilla CSS"],
     link: "https://aura-play-three.vercel.app/",
     github: "https://github.com/Ignite01rb/AuraPlay",
     accent: "from-yellow-400 to-red-500",
     accentColor: "#facc15",
     tag: "Frontend",
-    num: "05",
+    num: "04",
   },
   {
-    image: p4,
-    title: "React TODO Application",
+    image: p10,
+    title: "Taskify",
     description:
-      "Task management app with local storage persistence, editing features and completed task segregation.",
-    tech: ["React", "CSS"],
-    link: "https://669dfd7759d015c16460b482--ephemeral-medovik-909ca2.netlify.app/",
+      "Taskify is a premium, glassmorphic productivity dashboard featuring account registration, real-time analytics, and nested checklists to help users manage their daily goals.",
+    tech: ["React", "Vanilla CSS"],
+    link: "https://taskify-kappa-green.vercel.app/",
     github: "https://github.com/Ignite01rb/Todos",
     accent: "from-red-600 to-brown-700",
     accentColor: "#a3c2c2",
     tag: "React",
+    num: "05",
+  },
+  {
+    image: p11,
+    title: "Sentiment Analysis",
+    description:
+      "Machine learning model to classify tweets as positive or negative using NLP pipelines.",
+    tech: ["Python", "NLTK", "Scikit-learn", "Pandas", "NumPy", "Matplotlib", "Seaborn"],
+    link: "https://sentimentanalysis6.streamlit.app/",
+    github: "https://github.com/Ignite01rb/sentiment",
+    accent: "from-blue-400 to-purple-500",
+    accentColor: "#d24dff",
+    tag: "ML / AI",
     num: "06",
   },
   {
@@ -106,13 +96,7 @@ const projects = [
     title: "TowerDefence",
     description:
       "A 2D Tower Defense game built in C++ with OpenGL and GLUT, featuring real-time enemy spawning, interactive combat, and strategic power-up mechanics.",
-    tech: [
-      "C++",
-      "OpenGL",
-      "GLUT",
-      "G++ Compiler",
-    ],
-    // link: "https://sentimentanalysis6.streamlit.app/",
+    tech: ["C++", "OpenGL", "GLUT", "G++ Compiler"],
     github: "https://github.com/Ignite01rb/towerdefence",
     accent: "from-green-400 to-red-500",
     accentColor: "#70db70",
@@ -130,42 +114,69 @@ function ProjectCard({ project, index }) {
     offset: ["start end", "end start"],
   });
 
-  const imageY = useTransform(scrollYProgress, [0, 1], [30, -30]);
+  const imageY = useTransform(scrollYProgress, [0, 1], [0, 0]);
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 60 }}
+      initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{
+        duration: 0.7,
+        delay: index * 0.08,           // staggered cascade
+        ease: [0.25, 0.46, 0.45, 0.94],
+      }}
       className={`relative flex flex-col ${
         isEven ? "md:flex-row" : "md:flex-row-reverse"
       } items-stretch gap-0 rounded-2xl overflow-hidden`}
       style={{ border: "1px solid rgba(255,255,255,0.07)" }}
     >
-      {/* Image side */}
-      <div className="relative w-full md:w-1/2 overflow-hidden min-h-[220px] sm:min-h-[280px] md:min-h-[360px] bg-black/40">
+      {/* ── Image side ── */}
+      <motion.div
+        className="relative w-full md:w-1/2 overflow-hidden min-h-[220px] sm:min-h-[280px] md:min-h-[360px] bg-black/40"
+        whileHover="hovered"          // named hover state propagates to children
+      >
+        {/* Image with scale-on-hover */}
         <motion.img
           src={project.image}
           alt={project.title}
           loading="lazy"
           style={{ y: imageY }}
-          className="absolute inset-0 w-full h-full object-cover"
-          initial={{ scale: 1.08 }}
-          whileInView={{ scale: 1 }}
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          initial={{ scale: 1.15 }}
+          whileInView={{ scale: 1.08 }}
           viewport={{ once: true }}
           transition={{ duration: 1.2, ease: "easeOut" }}
+          variants={{
+            hovered: {
+              scale: 1.13,
+              transition: { duration: 0.5, ease: "easeOut" },
+            },
+          }}
         />
 
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/40" />
-
-        {/* Accent overlay on hover */}
+        {/* Dark overlay — lightens on hover */}
         <motion.div
-          className={`absolute inset-0 bg-gradient-to-tr ${project.accent} opacity-0`}
-          whileHover={{ opacity: 0.18 }}
-          transition={{ duration: 0.3 }}
+          className="absolute inset-0 bg-black/40"
+          variants={{
+            hovered: {
+              backgroundColor: "rgba(0,0,0,0.2)",
+              transition: { duration: 0.4 },
+            },
+          }}
+        />
+
+        {/* Accent gradient — fades in on hover */}
+        <motion.div
+          className={`absolute inset-0 bg-gradient-to-tr ${project.accent}`}
+          initial={{ opacity: 0 }}
+          variants={{
+            hovered: {
+              opacity: 0.22,
+              transition: { duration: 0.4 },
+            },
+          }}
         />
 
         {/* Project number watermark */}
@@ -176,8 +187,16 @@ function ProjectCard({ project, index }) {
           {project.num}
         </div>
 
-        {/* Tag pill */}
-        <div className="absolute top-4 right-4">
+        {/* Tag pill — lifts on hover */}
+        <motion.div
+          className="absolute top-4 right-4"
+          variants={{
+            hovered: {
+              y: -3,
+              transition: { duration: 0.3 },
+            },
+          }}
+        >
           <span
             className="text-[10px] font-mono tracking-widest uppercase px-3 py-1 rounded-full"
             style={{
@@ -189,57 +208,83 @@ function ProjectCard({ project, index }) {
           >
             {project.tag}
           </span>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
-      {/* Content side */}
+      {/* ── Content side ── */}
       <div
         className="relative w-full md:w-1/2 flex flex-col justify-center p-6 sm:p-8 md:p-10"
         style={{ background: "rgba(255,255,255,0.03)" }}
       >
-        {/* Top accent line */}
+        {/* Accent line */}
         <div
-          className={`absolute top-0 ${isEven ? "right-0 md:left-0 md:right-auto" : "left-0"} h-full w-[2px] bg-gradient-to-b ${project.accent} opacity-40`}
+          className={`absolute top-0 ${
+            isEven ? "right-0 md:left-0 md:right-auto" : "left-0"
+          } h-full w-[2px] bg-gradient-to-b ${project.accent} opacity-40`}
         />
 
         {/* Number label */}
-        <span
+        <motion.span
           className="font-mono text-xs tracking-[0.2em] mb-3 block"
           style={{ color: project.accentColor, opacity: 0.7 }}
+          initial={{ opacity: 0, x: -10 }}
+          whileInView={{ opacity: 0.7, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: index * 0.08 + 0.2 }}
         >
           // {project.num}
-        </span>
+        </motion.span>
 
+        {/* Title */}
         <motion.h3
           className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight mb-4"
           style={{ letterSpacing: "-0.02em" }}
-          whileHover={{ color: project.accentColor }}
-          transition={{ duration: 0.2 }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55, delay: index * 0.08 + 0.25 }}
+          whileHover={{ color: project.accentColor, transition: { duration: 0.2 } }}
         >
           {project.title}
         </motion.h3>
 
-        <p
+        {/* Description */}
+        <motion.p
           className="text-sm sm:text-base leading-relaxed mb-6"
           style={{ color: "rgba(255,255,255,0.5)" }}
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55, delay: index * 0.08 + 0.3 }}
         >
           {project.description}
-        </p>
+        </motion.p>
 
-        {/* Tech tags */}
+        {/* Tech tags — staggered wave */}
         <div className="flex flex-wrap gap-2 mb-8">
           {project.tech.map((t, i) => (
             <motion.span
               key={i}
-              initial={{ opacity: 0, scale: 0.85 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05, duration: 0.3 }}
-              className="text-xs font-mono px-3 py-1 rounded-full"
+              className="text-xs font-mono px-3 py-1 rounded-full cursor-default"
               style={{
                 background: "rgba(255,255,255,0.06)",
                 border: "1px solid rgba(255,255,255,0.1)",
                 color: "rgba(255,255,255,0.65)",
+              }}
+              initial={{ opacity: 0, y: 10, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.35,
+                delay: index * 0.08 + 0.35 + i * 0.045, // wave stagger
+                ease: "easeOut",
+              }}
+              whileHover={{
+                borderColor: `${project.accentColor}66`,
+                color: project.accentColor,
+                background: `${project.accentColor}11`,
+                y: -2,
+                transition: { duration: 0.2 },
               }}
             >
               {t}
@@ -247,12 +292,12 @@ function ProjectCard({ project, index }) {
           ))}
         </div>
 
-        {/* CTA */}
+        {/* Visit Project CTA */}
         <a
           href={project.link}
           target="_blank"
           rel="noreferrer"
-          className="group inline-flex items-center gap-3 w-fit"
+          className="group inline-flex items-center gap-3 w-fit mb-3"
         >
           <motion.span
             className="text-sm font-semibold tracking-wide"
@@ -275,7 +320,7 @@ function ProjectCard({ project, index }) {
             →
           </motion.span>
         </a>
-        {/* <span style={{ color: "rgba(255,255,255,0.1)" }}>|</span> */}
+
         {/* GitHub link */}
         <a
           href={project.github}
@@ -351,7 +396,6 @@ export default function Projects() {
           </span>
         </motion.h2>
 
-        {/* Project count line */}
         <motion.div
           initial={{ opacity: 0, scaleX: 0 }}
           whileInView={{ opacity: 1, scaleX: 1 }}
@@ -360,20 +404,14 @@ export default function Projects() {
           className="flex items-center gap-4 mb-12 md:mb-16 max-w-7xl mx-auto"
           style={{ transformOrigin: "left" }}
         >
-          <div
-            className="h-px flex-1"
-            style={{ background: "rgba(255,255,255,0.08)" }}
-          />
+          <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.08)" }} />
           <span
             className="font-mono text-xs tracking-[0.2em] uppercase"
             style={{ color: "rgba(255,255,255,0.3)" }}
           >
             projects
           </span>
-          <div
-            className="h-px flex-1"
-            style={{ background: "rgba(255,255,255,0.08)" }}
-          />
+          <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.08)" }} />
         </motion.div>
       </SectionReveal>
 
@@ -392,8 +430,7 @@ export default function Projects() {
         transition={{ duration: 0.8 }}
         className="max-w-7xl mx-auto mt-16 h-px"
         style={{
-          background:
-            "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)",
+          background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)",
           transformOrigin: "center",
         }}
       />
