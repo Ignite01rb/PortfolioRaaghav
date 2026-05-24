@@ -1,6 +1,6 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import SectionReveal from "./SectionReveal";
-import { useState } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 
 const videos = [
   {
@@ -30,71 +30,224 @@ const videos = [
   },
 ];
 
-function PlayIcon() {
+// ── Touch detection ───────────────────────────────────────────────────────────
+const isTouchDevice =
+  typeof window !== "undefined" &&
+  ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+
+// ── Animated play button ──────────────────────────────────────────────────────
+function PlayButton({ visible, accentColor = "#a855f7" }) {
   return (
-    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-      <div
-        className="w-11 h-11 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-        style={{
-          background: "rgba(168,85,247,0.2)",
-          border: "1.5px solid rgba(168,85,247,0.55)",
-        }}
-      >
-        <div
-          className="ml-1"
-          style={{
-            width: 0,
-            height: 0,
-            borderTop: "7px solid transparent",
-            borderBottom: "7px solid transparent",
-            borderLeft: "12px solid #d8b4fe",
-          }}
-        />
-      </div>
-    </div>
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          key="play"
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          initial={{ opacity: 0, scale: 0.75 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.75 }}
+          transition={{ duration: 0.22, ease: "easeOut" }}
+        >
+          {/* Ripple ring */}
+          <motion.span
+            className="absolute rounded-full"
+            style={{ border: `1.5px solid ${accentColor}55`, width: 60, height: 60 }}
+            initial={{ scale: 0.7, opacity: 0.6 }}
+            animate={{ scale: 1.6, opacity: 0 }}
+            transition={{ duration: 0.9, repeat: Infinity, ease: "easeOut" }}
+          />
+          {/* Button */}
+          <motion.div
+            className="w-12 h-12 rounded-full flex items-center justify-center"
+            style={{
+              background: `${accentColor}22`,
+              border: `1.5px solid ${accentColor}88`,
+              backdropFilter: "blur(6px)",
+            }}
+            whileHover={{ scale: 1.12 }}
+            whileTap={{ scale: 0.92 }}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill={accentColor}>
+              <path d="M3 2.5l10 5.5-10 5.5V2.5z" />
+            </svg>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
-function VideoCard({
-  video,
-  className = "",
-  onClick,
-  aspectClass = "aspect-video",
-}) {
+// ── Duration badge ────────────────────────────────────────────────────────────
+function DurationBadge({ duration, hovered }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5 }}
-      className={`relative group rounded-xl overflow-hidden cursor-pointer ${className}`}
-      style={{ border: "1px solid rgba(255,255,255,0.07)" }}
-      onClick={() => onClick(video.src)}
-      whileHover={{ borderColor: "rgba(168,85,247,0.4)" }}
+      className="text-[11px] shrink-0 self-end mb-0.5 px-2 py-0.5 rounded"
+      style={{
+        fontFamily: "'Fira Code', monospace",
+        background: hovered ? "rgba(168,85,247,0.18)" : "rgba(0,0,0,0.35)",
+        border: hovered ? "1px solid rgba(168,85,247,0.4)" : "1px solid rgba(255,255,255,0.08)",
+        color: hovered ? "#c084fc" : "rgba(255,255,255,0.35)",
+        transition: "all 0.3s ease",
+      }}
     >
-      <video
+      {duration}
+    </motion.div>
+  );
+}
+
+// ── VideoCard ─────────────────────────────────────────────────────────────────
+function VideoCard({ video, className = "", onClick, aspectClass = "aspect-video", delay = 0 }) {
+  const cardRef = useRef(null);
+  const videoRef = useRef(null);
+  const [hovered, setHovered] = useState(false);
+  const [touched, setTouched] = useState(false);
+  const [shimmer, setShimmer] = useState(false);
+
+  const isActive = hovered || touched;
+
+  // 3D tilt (desktop only)
+  const rawRX = useMotionValue(0);
+  const rawRY = useMotionValue(0);
+  const rotateX = useSpring(rawRX, { stiffness: 260, damping: 24 });
+  const rotateY = useSpring(rawRY, { stiffness: 260, damping: 24 });
+
+  // Spotlight glow position
+  const gX = useMotionValue(50);
+  const gY = useMotionValue(50);
+
+  const handleMouseMove = useCallback((e) => {
+    if (isTouchDevice) return;
+    const rect = cardRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    rawRY.set(((e.clientX - cx) / (rect.width / 2)) * 6);
+    rawRX.set(-((e.clientY - cy) / (rect.height / 2)) * 4);
+    gX.set(((e.clientX - rect.left) / rect.width) * 100);
+    gY.set(((e.clientY - rect.top) / rect.height) * 100);
+  }, [rawRX, rawRY, gX, gY]);
+
+  const handleMouseEnter = () => {
+    if (isTouchDevice) return;
+    setHovered(true);
+    videoRef.current?.play().catch(() => {});
+  };
+
+  const handleMouseLeave = () => {
+    if (isTouchDevice) return;
+    setHovered(false);
+    rawRX.set(0); rawRY.set(0);
+    gX.set(50); gY.set(50);
+  };
+
+  // Mobile touch
+  const handleTouchStart = () => {
+    setTouched(true);
+    setShimmer(true);
+    setTimeout(() => setShimmer(false), 500);
+  };
+  const handleTouchEnd = () => setTimeout(() => setTouched(false), 420);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.55, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      whileTap={isTouchDevice ? { scale: 0.975 } : {}}
+      style={{
+        rotateX: isTouchDevice ? 0 : rotateX,
+        rotateY: isTouchDevice ? 0 : rotateY,
+        transformPerspective: 800,
+        transformStyle: "preserve-3d",
+        willChange: "transform",
+      }}
+      animate={{
+        boxShadow: isActive
+          ? "0 0 0 1px rgba(168,85,247,0.5), 0 16px 50px rgba(168,85,247,0.2), 0 4px 20px rgba(0,0,0,0.6)"
+          : "0 0 0 1px rgba(255,255,255,0.07), 0 4px 16px rgba(0,0,0,0.4)",
+      }}
+      className={`relative group rounded-xl overflow-hidden cursor-pointer ${className}`}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onClick={() => onClick(video.src)}
+    >
+      {/* Spotlight glow */}
+      {!isTouchDevice && (
+        <motion.div
+          className="absolute inset-0 pointer-events-none z-10 rounded-xl"
+          animate={{ opacity: hovered ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+          style={{
+            background: `radial-gradient(circle at ${gX.get()}% ${gY.get()}%, rgba(168,85,247,0.18) 0%, transparent 60%)`,
+          }}
+        />
+      )}
+
+      {/* Video */}
+      <motion.video
+        ref={videoRef}
         src={video.src}
         muted
         autoPlay
         loop
         playsInline
-        className={`w-full ${aspectClass} object-cover transition-all duration-500 group-hover:scale-[1.03] group-hover:brightness-[0.8]`}
-        style={{ filter: "brightness(0.65)" }}
+        className={`w-full ${aspectClass} object-cover`}
+        animate={{
+          scale: isActive ? 1.07 : 1.0,
+          filter: isActive ? "brightness(0.55)" : "brightness(0.65)",
+        }}
+        transition={{ duration: isTouchDevice ? 0.3 : 0.55, ease: "easeOut" }}
       />
 
-      {/* overlay */}
-      <div
+      {/* Gradient overlay — deepens on hover */}
+      <motion.div
         className="absolute inset-0 pointer-events-none"
+        animate={{
+          background: isActive
+            ? "linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(88,28,135,0.12) 55%, transparent 100%)"
+            : "linear-gradient(to top, rgba(0,0,0,0.88) 0%, transparent 55%)",
+        }}
+        transition={{ duration: 0.4 }}
+      />
+
+      {/* Accent edge glow */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none rounded-xl"
+        animate={{ opacity: isActive ? 1 : 0 }}
+        transition={{ duration: 0.35 }}
         style={{
-          background:
-            "linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 55%)",
+          boxShadow: "inset 0 0 0 1px rgba(168,85,247,0.4)",
         }}
       />
 
-      <PlayIcon />
+      {/* Mobile shimmer sweep */}
+      <AnimatePresence>
+        {shimmer && (
+          <motion.div
+            key="shimmer"
+            className="absolute inset-0 pointer-events-none z-20"
+            initial={{ x: "-100%", opacity: 0.7 }}
+            animate={{ x: "200%", opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            style={{
+              background: "linear-gradient(105deg, transparent 35%, rgba(168,85,247,0.35) 50%, transparent 65%)",
+            }}
+          />
+        )}
+      </AnimatePresence>
 
+      {/* Play button */}
+      <PlayButton visible={isActive} />
+
+      {/* Featured badge */}
       {video.featured && (
-        <div
+        <motion.div
           className="absolute top-3 left-3 text-[10px] tracking-widest uppercase px-2 py-1 rounded"
           style={{
             fontFamily: "'Fira Code', monospace",
@@ -102,37 +255,105 @@ function VideoCard({
             border: "0.5px solid rgba(168,85,247,0.4)",
             color: "#c084fc",
           }}
+          animate={{ y: isActive ? -2 : 0, opacity: isActive ? 1 : 0.8 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
         >
           Featured
-        </div>
+        </motion.div>
       )}
 
-      <div className="absolute bottom-0 left-0 right-0 p-3 flex items-end justify-between gap-2">
+      {/* Bottom meta */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 p-3 flex items-end justify-between gap-2"
+        animate={{ y: isActive ? -4 : 0 }}
+        transition={{ type: "spring", stiffness: 280, damping: 22 }}
+      >
         <div>
-          <div
+          <motion.div
             className="text-[10px] tracking-widest uppercase mb-1"
-            style={{ fontFamily: "'Fira Code', monospace", color: "#a855f7" }}
+            style={{ fontFamily: "'Fira Code', monospace" }}
+            animate={{ color: isActive ? "#d8b4fe" : "#a855f7", x: isActive ? 2 : 0 }}
+            transition={{ duration: 0.25 }}
           >
             // {video.category}
-          </div>
-          <div className="text-white font-semibold text-sm leading-tight">
+          </motion.div>
+          <motion.div
+            className="font-semibold text-sm leading-tight"
+            animate={{ color: isActive ? "#fff" : "rgba(255,255,255,0.85)" }}
+            transition={{ duration: 0.2 }}
+          >
             {video.title}
-          </div>
+          </motion.div>
         </div>
-        <div
-          className="text-[11px] shrink-0 self-end mb-0.5"
-          style={{
-            fontFamily: "'Fira Code', monospace",
-            color: "rgba(255,255,255,0.35)",
-          }}
-        >
-          {video.duration}
-        </div>
-      </div>
+        <DurationBadge duration={video.duration} hovered={isActive} />
+      </motion.div>
     </motion.div>
   );
 }
 
+// ── Modal ─────────────────────────────────────────────────────────────────────
+function VideoModal({ src, onClose }) {
+  // Close on Escape
+  useEffect(() => {
+    const handler = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      className="fixed inset-0 flex items-center justify-center z-[65] p-4 sm:p-6"
+      style={{ background: "rgba(0,0,0,0.93)", backdropFilter: "blur(8px)" }}
+      onClick={onClose}
+    >
+      {/* Close button */}
+      <motion.button
+        className="absolute top-5 right-5 w-10 h-10 rounded-full flex items-center justify-center z-[70]"
+        style={{
+          border: "1px solid rgba(168,85,247,0.45)",
+          background: "rgba(168,85,247,0.12)",
+          color: "#c084fc",
+          fontSize: 16,
+        }}
+        onClick={onClose}
+        initial={{ opacity: 0, scale: 0.7, rotate: -45 }}
+        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+        exit={{ opacity: 0, scale: 0.7, rotate: 45 }}
+        transition={{ duration: 0.25 }}
+        whileHover={{ scale: 1.12, background: "rgba(168,85,247,0.22)" }}
+        whileTap={{ scale: 0.9 }}
+      >
+        ✕
+      </motion.button>
+
+      {/* Video */}
+      <motion.div
+        initial={{ scale: 0.82, opacity: 0, y: 30 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.82, opacity: 0, y: 30 }}
+        transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="max-w-5xl w-full rounded-2xl overflow-hidden"
+        style={{
+          boxShadow: "0 0 0 1px rgba(168,85,247,0.3), 0 30px 80px rgba(0,0,0,0.8)",
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <video
+          src={src}
+          controls
+          autoPlay
+          className="w-full rounded-2xl"
+        />
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// ── VideoProjects ─────────────────────────────────────────────────────────────
 export default function VideoProjects() {
   const [activeVideo, setActiveVideo] = useState(null);
 
@@ -167,11 +388,7 @@ export default function VideoProjects() {
         <div className="grid lg:grid-cols-3 gap-3 max-w-6xl mx-auto">
           {/* Featured — spans 2 cols */}
           <div className="lg:col-span-2">
-            <VideoCard
-              video={videos[0]}
-              onClick={setActiveVideo}
-              aspectClass="aspect-video"
-            />
+            <VideoCard video={videos[0]} onClick={setActiveVideo} aspectClass="aspect-video" delay={0} />
           </div>
 
           {/* Side tall card */}
@@ -181,35 +398,14 @@ export default function VideoProjects() {
               onClick={setActiveVideo}
               className="h-full"
               aspectClass="h-full min-h-[240px] lg:min-h-full"
+              delay={0.08}
             />
           </div>
 
-          {/* Bottom small */}
+          {/* Bottom row */}
           <div className="lg:col-span-2 grid grid-cols-2 gap-3">
-            <VideoCard
-              video={videos[2]}
-              onClick={setActiveVideo}
-              aspectClass="aspect-video"
-            />
-
-            {/* Add slot */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="rounded-xl aspect-video flex flex-col items-center justify-center gap-2 cursor-default"
-              style={{
-                border: "1px dashed rgba(168,85,247,0.25)",
-                background: "rgba(168,85,247,0.03)",
-              }}
-            >
-              <VideoCard
-                video={videos[3]}
-                onClick={setActiveVideo}
-                aspectClass="aspect-video"
-              />
-            </motion.div>
+            <VideoCard video={videos[2]} onClick={setActiveVideo} aspectClass="aspect-video" delay={0.14} />
+            <VideoCard video={videos[3]} onClick={setActiveVideo} aspectClass="aspect-video" delay={0.2} />
           </div>
         </div>
       </SectionReveal>
@@ -217,40 +413,7 @@ export default function VideoProjects() {
       {/* Fullscreen modal */}
       <AnimatePresence>
         {activeVideo && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 flex items-center justify-center z-[65] p-6"
-            style={{ background: "rgba(0,0,0,0.92)" }}
-            onClick={() => setActiveVideo(null)}
-          >
-            {/* Close button */}
-            <button
-              className="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center transition-colors z-[70]"
-              style={{
-                border: "1px solid rgba(168,85,247,0.4)",
-                background: "rgba(168,85,247,0.1)",
-                color: "#c084fc",
-                fontSize: 18,
-              }}
-              onClick={() => setActiveVideo(null)}
-            >
-              ✕
-            </button>
-
-            <motion.video
-              initial={{ scale: 0.85, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.85, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              src={activeVideo}
-              controls
-              autoPlay
-              className="max-w-5xl w-full rounded-xl"
-              onClick={(e) => e.stopPropagation()}
-            />
-          </motion.div>
+          <VideoModal key="modal" src={activeVideo} onClose={() => setActiveVideo(null)} />
         )}
       </AnimatePresence>
     </section>
